@@ -4,30 +4,22 @@ import android.content.Context
 import android.provider.MediaStore
 import android.util.Log
 import androidx.lifecycle.ViewModel
-import io.reactivex.Single
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.schedulers.Schedulers
-import java.util.*
-import kotlin.collections.ArrayList
+import kotlinx.coroutines.*
 
 class GalleryViewModel : ViewModel() {
-    private val compositeDisposable = CompositeDisposable()
     private var startingRow = 0
     private var rowsToLoad = 0
     private var allLoaded = false
+    private val viewModelJob = SupervisorJob()
+    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     fun getImagesFromGallery(context: Context, pageSize: Int, list: (List<String>) -> Unit) {
-        compositeDisposable.add(
-            Single.fromCallable {
+        uiScope.launch {
+            val asyncList = async {
                 fetchGalleryImages(context, pageSize)
-            }.subscribeOn(Schedulers.io()).observeOn(AndroidSchedulers.mainThread())
-                .subscribe({
-                    list(it)
-                }, {
-                    it.printStackTrace()
-                })
-        )
+            }
+            list(asyncList.await())
+        }
     }
 
     fun getGallerySize(context: Context): Int {
@@ -103,6 +95,6 @@ class GalleryViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        compositeDisposable.clear()
+        viewModelJob.cancel()
     }
 }
