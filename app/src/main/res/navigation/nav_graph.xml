@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/nav_graph"
+    app:startDestination="@id/galleryFragment">
+
+    <fragment
+        android:id="@+id/galleryFragment"
+        android:name="com.example.gallerysync.fragments.GalleryFragment"
+        android:label="gallery_fragment"
+        tools:layout="@layout/gallery_fragment" >
+
+        <action
+            android:id="@+id/action_galleryFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right" />
+
+        <action
+            android:id="@+id/action_galleryFragment_to_imagePreviewFragment"
+            app:destination="@id/imagePreviewFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right">
+
+            <argument
+                android:name="imagePath"
+                app:argType="string" />
+
+        </action>
+    </fragment>
+
+    <fragment
+        android:id="@+id/cameraFragment"
+        android:name="com.example.gallerysync.fragments.CameraFragment"
+        android:label="fragment_camera"
+        tools:layout="@layout/fragment_camera" >
+
+        <action
+            android:id="@+id/action_cameraFragment_to_permissionsFragment"
+            app:destination="@id/permissionsFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/cameraFragment"/>
+
+        <action
+            android:id="@+id/action_cameraFragment_to_imagePreviewFragment"
+            app:destination="@id/imagePreviewFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right">
+
+            <argument
+                android:name="imagePath"
+                app:argType="string" />
+        </action>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/imagePreviewFragment"
+        android:name="com.example.gallerysync.fragments.ImagePreviewFragment"
+        android:label="fragment_image_preview"
+        tools:layout="@layout/fragment_image_preview" >
+        <argument
+            android:name="imagePath"
+            app:argType="string" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/permissionsFragment"
+        android:name="com.example.gallerysync.fragments.PermissionsFragment"
+        android:label="PermissionsFragment" >
+        <action
+            android:id="@+id/action_permissionsFragment_to_cameraFragment"
+            app:destination="@id/cameraFragment"
+            app:popUpToInclusive="true"
+            app:popUpTo="@id/permissionsFragment"
+            app:enterAnim="@android:anim/slide_in_left"
+            app:exitAnim="@android:anim/slide_out_right"
+            app:popEnterAnim="@android:anim/slide_in_left"
+            app:popExitAnim="@android:anim/slide_out_right"/>
+    </fragment>
+
+</navigation>

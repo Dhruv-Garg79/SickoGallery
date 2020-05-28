@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#26755C</color>
+    <color name="colorPrimaryDark">#1B5543</color>
+    <color name="colorAccent">#e3b448</color>
+    <color name="icActive">#FFFFFFFF</color>
+    <color name="icFocused">#DDFFFFFF</color>
+    <color name="icPressed">#AAFFFFFF</color>
+    <color name="light_grey">#E8E8E8</color>
+</resources>
